@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .dashboard-container {
+            position: relative;
+        }
+        
+        .pie-chart-container {
+            position: fixed;
+            right: 20px;
+            top: 150px; /* Adjusted to be lower */
+            width: 300px;
+            height: 300px;
+            background: white;
+            border: 1px solid #ddd;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease-in-out;
+            z-index: 1000;
+        }
+
+        .pie-chart-container.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .chart-toggle-btn {
+            position: fixed;
+            right: 20px;
+            top: 100px; /* Adjusted to be lower */
+            padding: 8px 15px;
+            background: #36A2EB;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="home_page.html">Home</a></li>
+            <li><a href="about.html" onclick="storePreviousPage()">About</a></li>
+        </ul>
+    </nav>
+
+    <section class="statistics-dashboard">
+        <div class="dashboard-container">
+            <h2>Statistics Dashboard</h2>
+            
+            <!-- Chart Toggle Button -->
+            <button class="chart-toggle-btn" onclick="toggleChart()">Show Pie Chart</button>
+            
+            <!-- Pie Chart Container -->
+            <div class="pie-chart-container" id="pieChartContainer">
+                <canvas id="pieChart"></canvas>
+            </div>
+
+            <!-- Input Field and other elements -->
+            <div class="input-container">
+                <label for="tagOpID">Enter Tag Operator ID:</label>
+                <input type="text" id="tagOpID" placeholder="Enter Tag Operator ID" />
+                <button onclick="fetchStatistics()">Fetch Statistics</button>
+            </div>
+
+            <div id="statistics-container" class="message">
+                <p></p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let pieChartInstance = null;
+        let isChartVisible = false;
+
+        function storePreviousPage() {
+            localStorage.setItem("previousPage", window.location.href);
+        }
+
+        function toggleChart() {
+            const chartContainer = document.getElementById('pieChartContainer');
+            const toggleBtn = document.querySelector('.chart-toggle-btn');
+            
+            isChartVisible = !isChartVisible;
+            chartContainer.classList.toggle('visible', isChartVisible);
+            toggleBtn.textContent = isChartVisible ? 'Hide Pie Chart' : 'Show Pie Chart';
+            
+            // Redraw chart if it's becoming visible
+            if (isChartVisible && pieChartInstance) {
+                pieChartInstance.update();
+            }
+        }
+
+        function fetchStatistics() {
+            const tagOpID = document.getElementById('tagOpID').value;
+
+            if (!tagOpID) {
+                alert('Please enter a Tag Operator ID.');
+                return;
+            }
+
+            const statisticsContainer = document.getElementById('statistics-container');
+            statisticsContainer.innerHTML = "<p>Loading statistics...</p>";
+
+            // Your original API endpoint
+            fetch(`http://127.0.0.1:9115/ShowStatistics/${tagOpID}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                })
+                .then(data => {
+                    statisticsContainer.innerHTML = '';
+
+                    if (data.DebtsList?.length > 0) {
+                        // Create table
+                        let tableHTML = `
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Operator</th>
+                                        <th>Connections</th>
+                                        <th>Percentage</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+                        
+                        data.DebtsList.forEach(item => {
+                            tableHTML += `
+                                <tr>
+                                    <td>${item.operator_passer}</td>
+                                    <td>${item.connection_count}</td>
+                                    <td>${item.percentage}%</td>
+                                </tr>`;
+                        });
+                        
+                        tableHTML += `</tbody></table>`;
+                        statisticsContainer.innerHTML = tableHTML;
+
+                        // Create/update pie chart
+                        const ctx = document.getElementById('pieChart').getContext('2d');
+                        
+                        if (pieChartInstance) pieChartInstance.destroy();
+
+                        pieChartInstance = new Chart(ctx, {
+                            type: 'pie',
+                            data: {
+                                labels: data.DebtsList.map(item => item.operator_passer),
+                                datasets: [{
+                                    data: data.DebtsList.map(item => parseFloat(item.percentage)),
+                                    backgroundColor: [
+                                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
+                                        '#9966FF', '#FF9F40', '#E7E9ED', '#8C564B'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                animation: {
+                                    duration: 800,
+                                    easing: 'easeOutQuart'
+                                },
+                                plugins: {
+                                    legend: {
+                                        position: 'bottom'
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Connection Distribution'
+                                    }
+                                }
+                            }
+                        });
+
+                        // Automatically show chart when data loads
+                        if (!isChartVisible) toggleChart();
+                    } else {
+                        statisticsContainer.innerHTML = "<p>No data available.</p>";
+                        if (pieChartInstance) pieChartInstance.destroy();
+                    }
+                })
+                .catch(error => {
+                    statisticsContainer.innerHTML = "<p>Error loading data. Please try again later.</p>";
+                    console.error("Error:", error);
+                });
+        }
+    </script>
+</body>
+</html>

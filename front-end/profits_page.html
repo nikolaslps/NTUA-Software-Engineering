@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profits Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="home_page.html">Home</a></li> 
+            <li><a href="about.html" onclick="storePreviousPage()">About</a></li>
+        </ul>
+    </nav>
+
+    <section class="profits-dashboard">
+        <h2>Profits Dashboard</h2>
+        
+
+        <div class="input-container">
+            <label for="tagOpID">Enter Tag Operator ID:</label>
+            <input type="text" id="tagOpID" placeholder="Enter Tag Operator ID" />
+            <button onclick="fetchProfits()">Fetch Profits</button>
+        </div>
+
+        <div id="profits-container" class="message">
+            <p></p>
+        </div>
+    </section>
+
+    <script>
+        function storePreviousPage() {
+            localStorage.setItem("previousPage", window.location.href);
+        }
+        
+        function fetchProfits() {
+            const tagOpID = document.getElementById('tagOpID').value; 
+
+            if (!tagOpID) {
+                alert('Please enter a Tag Operator ID.');
+                return;
+            }
+
+      
+            const profitsContainer = document.getElementById('profits-container');
+
+
+            fetch(`http://127.0.0.1:9115/ShowProfits/${tagOpID}`)
+                .then(response => {
+           
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);  
+
+                    profitsContainer.innerHTML = ''; 
+
+                    if (data.DebtsList && data.DebtsList.length> 0){
+                        let tableHTML = `
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Profit Operator</th>
+                                        <th>Charge</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        `;
+
+                        data.DebtsList.forEach(item => {
+                            tableHTML += `
+                                <tr>
+                                    <td>${item.debt_operator}</td>
+                                    <td>${item.charge2}€</td>
+                                </tr>
+                            `;
+                        });
+
+                        tableHTML += `</tbody></table>`;
+                        profitsContainer.innerHTML = tableHTML;
+                    } else {
+                        profitsContainer.innerHTML = "<p>No data available.</p>";
+                    }
+                })
+                .catch(error => {
+                    profitsContainer.innerHTML = "<p>Error loading data. Please try again later.</p>";
+                    console.error("Error:", error);
+                });
+        }
+    </script>
+
+</body>
+</html>

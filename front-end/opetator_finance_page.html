@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="home_page.html">Home</a></li>
+            <li><a href="about.html" onclick="storePreviousPage()">About</a></li>
+        </ul>
+    </nav>
+    
+    <section class="hero">
+    <a href="debts_page.html" class="content-box left">
+        <div class="box-content">
+            <img src="images/borrow.png" alt="Finance Icon" class="box-icon">
+            <div class="text-content">
+                <h3>Debts Dashboard</h3>
+                <p>View Debts.</p>
+            </div>
+        </div>
+    </a>
+
+    <a href="profits_page.html" class="content-box right">
+        <div class="box-content">
+            <img src="images/business-and-finance.png" alt="Profits Icon" class="box-icon">
+            <div class="text-content">
+                <h3>Profits Dashboard</h3>
+                <p>View Profits.</p>
+            </div>
+        </div>
+    </a>
+</section>
+
+<script>
+    function storePreviousPage() {
+        localStorage.setItem("previousPage", window.location.href);
+    }
+</script>
+
+
+</body>
+</html>

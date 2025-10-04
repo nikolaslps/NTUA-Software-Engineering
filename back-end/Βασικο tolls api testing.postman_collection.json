@@ -1,0 +1,433 @@
+{
+	"info": {
+		"_postman_id": "68d99206-6f5d-4e06-81ba-acaec1b21ee4",
+		"name": "Βασικο tolls api testing",
+		"description": "εδω μπορειτε να δειτε την λειτουργια του REST API του λογισμικου μας.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41274581",
+		"_collection_link": "https://project-apos.postman.co/workspace/tollstation-API~329373f5-0a86-4eb9-bf92-ed4788ea4dba/collection/41274581-68d99206-6f5d-4e06-81ba-acaec1b21ee4?action=share&source=collection_link&creator=41274581"
+	},
+	"item": [
+		{
+			"name": "Admin - Healthcheck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status 200 OK', function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Valid JSON response', function () {",
+							"  pm.expect(pm.response).to.be.json;",
+							"});",
+							"pm.test('Has required fields', function () {",
+							"  const res = pm.response.json();",
+							"  pm.expect(res).to.have.keys('status', 'dbconnection', 'n_stations', 'n_tags', 'n_passes');",
+							"  pm.expect(res.status).to.eql('OK');",
+							"  pm.expect(res.dbconnection).to.be.a('string');",
+							"  pm.expect(res.n_stations).to.be.a('number').and.to.be.at.least(0);",
+							"  pm.expect(res.n_tags).to.be.a('number').and.to.be.at.least(0);",
+							"  pm.expect(res.n_passes).to.be.a('number').and.to.be.at.least(0);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9115/admin/healthcheck",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9115",
+					"path": [
+						"admin",
+						"healthcheck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Reset Stations",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status 200 OK', () => {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Valid response structure', () => {",
+							"  const res = pm.response.json();",
+							"  pm.expect(res).to.have.property('status').that.is.a('string');",
+							"  pm.expect(res.status).to.be.oneOf(['OK', 'failed']);",
+							"  if (res.status === 'failed') {",
+							"    pm.expect(res).to.have.property('info');",
+							"  }",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9115/admin/resetstations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9115",
+					"path": [
+						"admin",
+						"resetstations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Reset Passes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status 200 OK', function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Valid response structure', function () {",
+							"  const res = pm.response.json();",
+							"  pm.expect(res).to.have.property('status').that.is.a('string');",
+							"  pm.expect(res.status).to.be.oneOf(['OK', 'failed']);",
+							"  if(res.status === 'failed') pm.expect(res).to.have.property('info');",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9115/admin/resetpasses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9115",
+					"path": [
+						"admin",
+						"resetpasses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Add Passes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status 200 OK', () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Valid response structure', () => {",
+							"  const res = pm.response.json();",
+							"  pm.expect(res).to.have.property('status').that.is.a('string');",
+							"  pm.expect(res.status).to.be.oneOf(['OK', 'failed']);",
+							"  if(res.status === 'failed') pm.expect(res).to.have.property('info');",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "postman-cloud:///1efe8016-e2b0-4860-8068-63a254fed26b"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:9115/admin/addpasses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9115",
+					"path": [
+						"admin",
+						"addpasses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Toll Station Passes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status 200 OK', () => pm.response.to.have.status(200));",
+							"pm.test('Valid response structure', () => {",
+							"  const res = pm.response.json();",
+							"  pm.expect(res).to.have.keys(",
+							"    'stationID',",
+							"    'stationOperator',",
+							"    'requestTimestamp',",
+							"    'periodFrom',",
+							"    'periodTo',",
+							"    'nPasses',",
+							"    'passList'",
+							"  );",
+							"  pm.expect(res.requestTimestamp).to.match(/^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}$/);",
+							"  pm.expect(res.passList).to.be.an('array');",
+							"  res.passList.forEach(pass => {",
+							"    pm.expect(pass).to.have.keys(",
+							"      'passIndex',",
+							"      'passID',",
+							"      'timestamp',",
+							"      'tagID',",
+							"      'tagProvider',",
+							"      'passType',",
+							"      'passCharge'",
+							"    );",
+							"    pm.expect(pass.timestamp).to.match(/^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}$/);",
+							"  });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9115/tollStationPasses/NAO01/20201101/20241130?format=json",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9115",
+					"path": [
+						"tollStationPasses",
+						"NAO01",
+						"20201101",
+						"20241130"
+					],
+					"query": [
+						{
+							"key": "format",
+							"value": "json"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pass Analysis",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status 200 OK', () => {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Valid response structure', () => {",
+							"  const res = pm.response.json();",
+							"  pm.expect(res).to.have.keys(",
+							"    'stationOpID',",
+							"    'tagOpID',",
+							"    'requestTimestamp',",
+							"    'periodFrom',",
+							"    'periodTo',",
+							"    'nPasses',",
+							"    'passList'",
+							"  );",
+							"  pm.expect(res.passList).to.be.an('array');",
+							"  res.passList.forEach(pass => {",
+							"    pm.expect(pass).to.have.keys(",
+							"      'passIndex',",
+							"      'passID',",
+							"      'stationID',",
+							"      'timestamp',",
+							"      'tagID',",
+							"      'passCharge'",
+							"    );",
+							"  });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9115/passAnalysis/MO/MO/20200101/20241231",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9115",
+					"path": [
+						"passAnalysis",
+						"MO",
+						"MO",
+						"20200101",
+						"20241231"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Passes Cost",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status 200 OK', () => {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Valid response structure', () => {",
+							"  const res = pm.response.json();",
+							"  pm.expect(res).to.have.keys(",
+							"    'tollOpID',",
+							"    'tagOpID',",
+							"    'requestTimestamp',",
+							"    'periodFrom',",
+							"    'periodTo',",
+							"    'nPasses',",
+							"    'passesCost'",
+							"  );",
+							"  pm.expect(res.passesCost).to.be.a('number').and.at.least(0);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9115/passesCost/MO/MO/20200101/20241231",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9115",
+					"path": [
+						"passesCost",
+						"MO",
+						"MO",
+						"20200101",
+						"20241231"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Charges By",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status 200 OK', () => {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Valid response structure', () => {",
+							"  const res = pm.response.json();",
+							"  pm.expect(res).to.have.keys(",
+							"    'tollOpID',",
+							"    'requestTimestamp',",
+							"    'periodFrom',",
+							"    'periodTo',",
+							"    'vOpList'",
+							"  );",
+							"  pm.expect(res.vOpList).to.be.an('array');",
+							"  res.vOpList.forEach(op => {",
+							"    pm.expect(op).to.have.keys(",
+							"      'visitingOpID',",
+							"      'nPasses',",
+							"      'passesCost'",
+							"    );",
+							"  });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9115/chargesBy/MO/20200101/20241231",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9115",
+					"path": [
+						"chargesBy",
+						"MO",
+						"20200101",
+						"20241231"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

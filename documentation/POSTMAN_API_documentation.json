@@ -1,0 +1,561 @@
+
+{
+    "info": {
+        "name": "Toll Management API- TollIO", 
+        "description": "Postman collection for toll station API endpoints", 
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "GET /admin/healthcheck",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:5000/admin/healthcheck",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5000",
+                    "path": [
+                        "admin",
+                        "healthcheck"
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "{\n    \"status\": \"OK\",\n    \"dbconnection\": \"connection_string_placeholder\",\n    \"n_stations\": 10,\n    \"n_tags\": 100,\n    \"n_passes\": 500\n}"
+                },
+                {
+                    "name": "Failure Response",
+                    "status": "Internal Server Error",
+                    "code": 500,
+                    "body": "{\n    \"status\": \"failed\",\n    \"dbconnection\": \"connection_string_placeholder\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "POST /admin/resetstations",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5000/admin/resetstations",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5000",
+                    "path": [
+                        "admin",
+                        "resetstations"
+                    ]
+                },
+                "body": {
+                    "mode": "raw",
+                    "raw": "{}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                }
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "{\n    \"status\": \"OK\"\n}"
+                },
+                {
+                    "name": "Failure Response",
+                    "status": "Internal Server Error",
+                    "code": 500,
+                    "body": "{\n    \"status\": \"failed\",\n    \"info\": \"Error message placeholder\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "POST /admin/resetpasses",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5000/admin/resetpasses",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5000",
+                    "path": [
+                        "admin",
+                        "resetpasses"
+                    ]
+                },
+                "body": {
+                    "mode": "raw",
+                    "raw": "{}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                }
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "{\n    \"status\": \"OK\"\n}"
+                },
+                {
+                    "name": "Failure Response",
+                    "status": "Internal Server Error",
+                    "code": 500,
+                    "body": "{\n    \"status\": \"failed\",\n    \"info\": \"Error message placeholder\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "POST /admin/addpasses",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5000/admin/addpasses",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "5000",
+                    "path": ["admin", "addpasses"]
+                },
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "file",
+                            "type": "file",
+                            "src": ""
+                        }
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "{\n    \"status\": \"OK\"\n}"
+                },
+                {
+                    "name": "Failure Response",
+                    "status": "Bad Request",
+                    "code": 400,
+                    "body": "{\n    \"status\": \"failed\",\n    \"info\": \"No file part\"\n}"
+                },
+                {
+                    "name": "Failure Response - Invalid File Type",
+                    "status": "Bad Request",
+                    "code": 400,
+                    "body": "{\n    \"status\": \"failed\",\n    \"info\": \"Invalid file type\"\n}"
+                },
+                {
+                    "name": "Failure Response - Server Error",
+                    "status": "Internal Server Error",
+                    "code": 500,
+                    "body": "{\n    \"status\": \"failed\",\n    \"info\": \"Error message placeholder\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "GET /tollStationPasses/{tollStationID}/{date_from}/{date_to}",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:5000/tollStationPasses/{tollStationID}/{date_from}/{date_to}",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "5000",
+                    "path": [
+                        "tollStationPasses",
+                        "{tollStationID}",
+                        "{date_from}",
+                        "{date_to}"
+                    ],
+                    "variable": [
+                        {
+                            "key": "tollStationID",
+                            "value": "",
+                            "description": "The ID of the toll station"
+                        },
+                        {
+                            "key": "date_from",
+                            "value": "",
+                            "description": "Start date (YYYYMMDD format)"
+                        },
+                        {
+                            "key": "date_to",
+                            "value": "",
+                            "description": "End date (YYYYMMDD format)"
+                        }
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "{\n    \"stationID\": \"MO01\",\n    \"stationOperator\": \"moreas\",\n    \"requestTimestamp\": \"2025-02-12 16:18\",\n    \"periodFrom\": \"2022-01-01\",\n    \"periodTo\": \"2023-11-09\",\n    \"nPasses\": 2,\n    \"passList\": [\n        {\n            \"passIndex\": 1,\n            \"passID\": \"4DBBU0NT\",\n            \"timestamp\": \"2022-01-07 07:54\",\n            \"tagID\": \"MOV86WZS3\",\n            \"tagProvider\": \"MO\",\n            \"passType\": \"home\",\n            \"passCharge\": 1.35\n        },\n   {\n            \"passIndex\": 2,\n            \"passID\": \"AOSEDPZU\",\n            \"timestamp\": \"2022-01-10 03:11\",\n            \"tagID\": \"NO7PTX63C\",\n            \"tagProvider\": \"NO\",\n            \"passType\": \"visitor\",\n            \"passCharge\": 1.35\n        }\n  ]\n}"
+                },
+                {
+                    "name": "Success Response - CSV",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "stationID,stationOperator,requestTimestamp,periodFrom,periodTo,nPasses,passIndex,passID,timestamp,tagID,tagProvider,passType,passCharge\nMO01,moreas,2025-02-12 16:18,2022-01-01,2023-11-09,2,1,P4DBBU0NT,2022-01-07 07:54,TV86WZS3,MO,home,1.35\nMO01,moreas,2025-02-12 16:18,2022-01-01,2023-11-09,2,2,AOSEDPZU,2022-01-10 03:11, NO7PTX63C, NO,viditor, 1.35"
+                },
+                {
+                    "name": "Failure Response",
+                    "status": "Internal Server Error",
+                    "code": 500,
+                    "body": "{\n    \"error\": \"Error message placeholder\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "GET /passAnalysis/{stationOpID}/{tagOpID}/{date_from}/{date_to}",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:5000/passAnalysis/{stationOpID}/{tagOpID}/{date_from}/{date_to}",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "5000",
+                    "path": [
+                        "passAnalysis",
+                        "{stationOpID}",
+                        "{tagOpID}",
+                        "{date_from}",
+                        "{date_to}"
+                    ],
+                    "variable": [
+                        {
+                            "key": "stationOpID",
+                            "value": "",
+                            "description": "The ID of the station operator"
+                        },
+                        {
+                            "key": "tagOpID",
+                            "value": "",
+                            "description": "The ID of the tag operator"
+                        },
+                        {
+                            "key": "date_from",
+                            "value": "",
+                            "description": "Start date (YYYYMMDD format)"
+                        },
+                        {
+                            "key": "date_to",
+                            "value": "",
+                            "description": "End date (YYYYMMDD format)"
+                        }
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "{\n    \"stationOpID\": \"MO\",\n    \"tagOpID\": \"MO\",\n    \"requestTimestamp\": \"2025-02-12 16:31\",\n    \"periodFrom\": \"2022-01-01\",\n    \"periodTo\": \"2025-11-09\",\n    \"nPasses\": 25,\n    \"passList\": [\n        {\n            \"passIndex\": 1,\n            \"passID\": \"LDPVF0ER\",\n            \"stationID\": \"MO05\",\n            \"timestamp\": \"2022-01-01 08:55\",\n            \"tagID\": \"MOJCKJLTE\",\n            \"passCharge\": 2.6\n        }\n ...   ]\n}"
+                },
+                {
+                    "name": "Success Response - CSV",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "stationOpID,tagOpID,requestTimestamp,periodFrom,periodTo,nPasses,passIndex,passID,stationID,timestamp,tagID,passCharge\nMO,MO,2025-02-12 16:31,2022-01-01,2025-11-09,25,1,LDPVF0ER,MO05,2022-01-01 08:55,MOJCKJLTE,2.\n ..."
+                },
+                {
+                    "name": "Failure Response",
+                    "status": "Internal Server Error",
+                    "code": 500,
+                    "body": "{\n    \"error\": \"Error message placeholder\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "GET /passesCost/{tollOpID}/{tagOpID}/{date_from}/{date_to}",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:5000/passesCost/{tollOpID}/{tagOpID}/{date_from}/{date_to}",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "5000",
+                    "path": [
+                        "passesCost",
+                        "{tollOpID}",
+                        "{tagOpID}",
+                        "{date_from}",
+                        "{date_to}"
+                    ],
+                    "variable": [
+                        {
+                            "key": "tollOpID",
+                            "value": "",
+                            "description": "The ID of the toll operator"
+                        },
+                        {
+                            "key": "tagOpID",
+                            "value": "",
+                            "description": "The ID of the tag operator"
+                        },
+                        {
+                            "key": "date_from",
+                            "value": "",
+                            "description": "Start date (YYYYMMDD format)"
+                        },
+                        {
+                            "key": "date_to",
+                            "value": "",
+                            "description": "End date (YYYYMMDD format)"
+                        }
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "{\n    \"tollOpID\": \"MO\",\n    \"tagOpID\": \"MO\",\n    \"requestTimestamp\": \"2025-02-12 17:32\",\n    \"periodFrom\": \"2022-01-01\",\n    \"periodTo\": \"2023-11-09\",\n    \"nPasses\": 25,\n    \"passesCost\": 62.2\n}"
+                },
+                {
+                    "name": "Success Response - CSV",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "tollOpID,tagOpID,requestTimestamp,periodFrom,periodTo,nPasses,passesCost\nMO,MO,2025-02-12 17:32,2022-01-01,2023-11-09,25,62.2"
+                },
+                {
+                    "name": "Failure Response",
+                    "status": "Internal Server Error",
+                    "code": 500,
+                    "body": "{\n    \"error\": \"Error message placeholder\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "GET /chargesBy/{tollOpID}/{date_from}/{date_to}",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:5000/chargesBy/{tollOpID}/{date_from}/{date_to}",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "5000",
+                    "path": [
+                        "chargesBy",
+                        "{tollOpID}",
+                        "{date_from}",
+                        "{date_to}"
+                    ],
+                    "variable": [
+                        {
+                            "key": "tollOpID",
+                            "value": "",
+                            "description": "The ID of the toll operator"
+                        },
+                        {
+                            "key": "date_from",
+                            "value": "",
+                            "description": "Start date (YYYYMMDD format)"
+                        },
+                        {
+                            "key": "date_to",
+                            "value": "",
+                            "description": "End date (YYYYMMDD format)"
+                        }
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "{\n    \"tollOpID\": \"MO\",\n    \"requestTimestamp\": \"2025-02-12 17:33\",\n    \"periodFrom\": \"2022-01-01\",\n    \"periodTo\": \"2023-11-09\",\n    \"vOpList\": [\n        {\n            \"visitingOpID\": \"NAO\",\n            \"nPasses\": 4,\n            \"passesCost\": 9.7\n        }\n .....   ]\n}"
+                },
+                {
+                    "name": "Success Response - CSV",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "tollOpID,requestTimestamp,periodFrom,periodTo,visitingOpID,nPasses,passesCost\nMO,2025-02-12 17:33,2022-01-01,2023-11-09,NAO,4,9.7\n..."
+                },
+                {
+                    "name": "Failure Response",
+                    "status": "Internal Server Error",
+                    "code": 500,
+                    "body": "{\n    \"error\": \"Error message placeholder\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "GET /ShowDebts/{tagOpID}",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:5000/ShowDebts/{tagOpID}",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "5000",
+                    "path": [
+                        "ShowDebts",
+                        "{tagOpID}"
+                    ],
+                    "variable": [
+                        {
+                            "key": "tagOpID",
+                            "value": "",
+                            "description": "The ID of the tag operator"
+                        }
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "{\n    \"tagOpID\": \"MO\",\n    \"DebtsList\": [\n        {\n            \"owned_operator\": \"NAO\",\n            \"charge\": \"17.2\"\n        }\n ....   ]\n}"
+                },
+                {
+                    "name": "Success Response - CSV",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "tagOpID,owned_operator,charge\nMO,NAO,17.2\n..."
+                },
+                {
+                    "name": "Failure Response",
+                    "status": "Internal Server Error",
+                    "code": 500,
+                    "body": "{\n    \"error\": \"Error message placeholder\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "GET /ShowProfits/{tagOpID}",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:5000/ShowProfits/{tagOpID}",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "5000",
+                    "path": [
+                        "ShowProfits",
+                        "{tagOpID}"
+                    ],
+                    "variable": [
+                        {
+                            "key": "tagOpID",
+                            "value": "",
+                            "description": "The ID of the tag operator"
+                        }
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "{\n    \"tagOpID\": \"MO\",\n    \"DebtsList\": [\n        {\n            \"debt_operator\": \"AM\",\n            \"charge2\": \"9.15\"\n        }\n....    ]\n}"
+                },
+                {
+                    "name": "Success Response - CSV",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "tagOpID,debt_operator,charge2\nMO,AM,9.15\n...."
+                },
+                {
+                    "name": "Failure Response",
+                    "status": "Internal Server Error",
+                    "code": 500,
+                    "body": "{\n    \"error\": \"Error message placeholder\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "GET /ShowStatistics/{tagOpID}",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:5000/ShowStatistics/{tagOpID}",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "5000",
+                    "path": [
+                        "ShowStatistics",
+                        "{tagOpID}"
+                    ],
+                    "variable": [
+                        {
+                            "key": "tagOpID",
+                            "value": "",
+                            "description": "The ID of the tag operator"
+                        }
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "{\n    \"tagOpID\": \"MO\",\n    \"DebtsList\": [\n        {\n            \"tagHomeID\": \"MO\",\n            \"operator_passer\": \"MO\",\n            \"connection_count\": 25,\n            \"percentage\": 65.79\n        }\n ....   ]\n}"
+                },
+                {
+                    "name": "Success Response - CSV",
+                    "status": "OK",
+                    "code": 200,
+                    "body": "tagOpID,operator_passer,connection_count,percentage\nMO,MO,25,65.79"
+                },
+                {
+                    "name": "Failure Response",
+                    "status": "Internal Server Error",
+                    "code": 500,
+                    "body": "{\n    \"error\": \"Error message placeholder\"\n}"
+                }
+            ]
+        }
+    ]
+}
+

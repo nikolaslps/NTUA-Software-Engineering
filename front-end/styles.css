@@ -1,0 +1,344 @@
+/* General reset and body styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-image: url('images/roads2.jpg');
+    background-size: 100%;
+}
+
+/* Navigation bar styling */
+nav {
+    position: fixed;
+    background-color: black;
+    top: 0;
+    width: 100%;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: flex-end;
+    z-index: 1000; /* Ensure nav is above other content */
+}
+
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+/* Hero section styling (background image) */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Content Box Styling (Operator Finances and Stats) */
+.content-box {
+    width: 280px;
+    height: 120px;
+    background: white;
+    color: black;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    text-decoration: none;
+    transition: 0.3s ease;
+    padding: 15px;
+}
+
+.content-box:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+}
+
+.box-content {
+    display: flex;
+    align-items: center;
+}
+
+.box-icon {
+    width: 40px;
+    height: 40px;
+    margin-right: 12px;
+}
+
+.text-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.left {
+    left: 25%;
+}
+
+.right {
+    right: 25%;
+}
+
+h3 {
+    font-size: 1.1rem;
+    margin-bottom: 3px;
+}
+
+p {
+    font-size: 0.85rem;
+    color: #555;
+}
+
+/* Hero content (Text) styling */
+#heroContent {
+	margin-top: -100px;
+    margin-bottom: 80px; /* Adjust the space between text and buttons */
+}
+
+#heroSection {
+    margin-top: -100px;
+}
+
+/* Statistics page specific styling */
+.statistics-dashboard {
+    position: static; /* Reset to default positioning */
+    width: 100%;
+    padding: 20px;
+    margin-top: 120px; /* Add margin to avoid overlap with the navbar */
+    color: white;
+}
+
+.statistics-dashboard h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.statistics-dashboard input {
+    padding: 10px;
+    font-size: 1rem;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.statistics-dashboard button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.statistics-dashboard button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Back Button Styling */
+.back-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #333; /* Dark background for the button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px; /* Space below the button */
+    display: inline-block; /* Ensure it behaves like a button */
+}
+
+.back-button:hover {
+    background-color: #555; /* Slightly lighter on hover */
+}
+
+/* Table styling for displaying statistics */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+    color: black; /* Ensure text color is black for readability */
+}
+
+table th {
+    background-color: #333;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table tr:hover {
+    background-color: #ddd;
+}
+
+#statistics-container p {
+    color: black; /* Change to any color you want */
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+
+/* Debts*/
+/* Debts page specific styling */
+.debts-dashboard {
+    position: static; /* Reset to default positioning */
+    width: 100%;
+    padding: 20px;
+    margin-top: 120px; /* Add margin to avoid overlap with the navbar */
+    color: white;
+}
+
+.debts-dashboard h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.debts-dashboard input {
+    padding: 10px;
+    font-size: 1rem;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.debts-dashboard button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #FF5733; /* Orange-Red color to differentiate from statistics */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.debts-dashboard button:hover {
+    background-color: #E04E2D; /* Darker orange-red on hover */
+}
+
+/* Table styling for displaying debts */
+#debts-container p {
+    color: black; /* Ensure text is readable */
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+
+
+/*Profits*/
+/* Profits page specific styling */
+.profits-dashboard {
+    position: static; /* Reset to default positioning */
+    width: 100%;
+    padding: 20px;
+    margin-top: 120px; /* Add margin to avoid overlap with the navbar */
+    color: white;
+}
+
+.profits-dashboard h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.profits-dashboard input {
+    padding: 10px;
+    font-size: 1rem;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.profits-dashboard button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #007BFF; /* Blue color for profits */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.profits-dashboard button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Table styling for displaying profits */
+#profits-container p {
+    color: black; /* Ensure text is readable */
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* About Page Styling */
+.about-section {
+    max-width: 800px;
+    margin: 100px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.about-section h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.about-section p {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.about-section ul {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.about-section ul li {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+/* Back Button Styling */
+.back-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #333;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.back-button:hover {
+    background: #555;
+}
+
